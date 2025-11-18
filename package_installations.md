@@ -37,7 +37,7 @@ Installation commands:
 cd client
 npm install
 npm install axios react-router-dom
-npm install --save-dev tailwindcss postcss autoprefixer
+npm install -D tailwindcss@3.4.10 postcss autoprefixer
 ```
 
 Vite generates a `/client/node_modules` folder for UI dependencies, while the backend keeps its own `/server/node_modules`.

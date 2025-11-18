@@ -10,7 +10,11 @@ export default function App() {
   return (
     <Router>
       <Navbar />
-
+      
+      <div className="p-4 text-4xl text-blue-500 font-bold">
+        Tailwind Works!
+      </div>
+          
       <div className="p-4">
         <Routes>
           <Route path="/" element={<Home />} />
