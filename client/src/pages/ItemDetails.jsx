@@ -41,11 +41,21 @@ export default function ItemDetails() {
     <div className="p-6 max-w-2xl mx-auto text-white">
 
       {/* Item heading */}
-      <h1 className="text-3xl font-bold mb-4">{item.name}</h1>
-      <p className="text-gray-300 mb-2">Category: {item.category}</p>
-      <p className="text-yellow-400 mb-8 text-lg">
-        ⭐ Avg Rating: {item.averageRating?.toFixed(1) || "No ratings yet"}
-      </p>
+          <h1 className="text-3xl font-bold mb-4">{item.name}</h1>
+      
+          {/* Image */}
+          {item.imageUrl && (
+            <img
+              src={item.imageUrl}
+              alt="item"
+              className="w-full rounded-lg mb-6"
+            />
+          )}
+      
+          <p className="text-gray-300 mb-2">{item.category}</p>
+          <p className="text-yellow-400 mb-8 text-lg">
+            ⭐ Avg Rating: {item.averageRating?.toFixed(1) || "No ratings yet"}
+          </p>
 
       {/* Review form */}
       <div className="p-4 bg-gray-800 rounded-xl mb-8">

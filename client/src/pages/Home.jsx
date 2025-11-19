@@ -69,21 +69,35 @@ export default function Home() {
         {filteredItems.length === 0 ? (
           <p className="text-gray-400 text-lg">No items found.</p>
         ) : (
+          
           filteredItems.map((item) => (
             <Link
               to={`/item/${item._id}`}
               key={item._id}
               className="block bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition"
             >
+              {/* Image */}
+              {item.imageUrl && (
+                <img
+                  src={item.imageUrl}
+                  alt="item"
+                  className="w-full h-48 object-cover rounded mb-3"
+                />
+              )}
+          
+              {/* Name */}
               <h2 className="text-2xl font-semibold mb-2">{item.name}</h2>
-
+          
+              {/* Category */}
               <p className="text-gray-400">{item.category}</p>
-
+          
+              {/* Rating */}
               <p className="text-yellow-400 mt-2">
                 ⭐ {item.averageRating?.toFixed(1) || "No ratings yet"}
               </p>
             </Link>
           ))
+
         )}
 
       </div>
