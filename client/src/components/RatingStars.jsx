@@ -1,8 +1,14 @@
-export default function RatingStars({ rating = 0 }) {
+export default function RatingStars({ rating, setRating }) {
   return (
-    <div className="flex gap-1">
-      {[1,2,3,4,5].map((n) => (
-        <span key={n} className={n <= rating ? "text-yellow-400" : "text-gray-400"}>
+    <div className="flex space-x-1">
+      {[1, 2, 3, 4, 5].map((num) => (
+        <span
+          key={num}
+          onClick={() => setRating(num)}
+          className={`text-3xl cursor-pointer ${
+            rating >= num ? "text-yellow-400" : "text-gray-500"
+          }`}
+        >
           ★
         </span>
       ))}

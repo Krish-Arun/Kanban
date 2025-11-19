@@ -20,9 +20,8 @@ export const addItem = async (itemData) => {
   return res.data;
 };
 
-// POST rating
-export const rateItem = async (id, rating) => {
-  const res = await axios.post(`${API}/${id}/rate`, { rating });
+// POST review (⭐ NEW)
+export const addReview = async (id, data) => {
+  const res = await axios.post(`${API}/${id}/review`, data);
   return res.data;
 };
-  

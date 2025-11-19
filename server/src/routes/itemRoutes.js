@@ -3,7 +3,7 @@ import {
   getAllItems,
   getItem,
   addItem,
-  rateItem
+  addReview
 } from "../controllers/itemController.js";
 
 const router = express.Router();
@@ -11,6 +11,6 @@ const router = express.Router();
 router.get("/", getAllItems);
 router.get("/:id", getItem);
 router.post("/", addItem);
-router.post("/:id/rate", rateItem);
+router.post("/:id/review", addReview);
 
 export default router;
