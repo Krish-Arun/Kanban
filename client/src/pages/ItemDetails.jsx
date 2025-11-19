@@ -1,31 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { getItem, addReview } from "../api/items";
 import RatingStars from "../components/RatingStars";
+import { AuthContext } from "../context/AuthContext";
 
-export default function ItemDetails({ username }) {
+export default function ItemDetails() {
   const { id } = useParams();
-  const [item, setItem] = useState(null);
+  const { user } = useContext(AuthContext);
 
+  const [item, setItem] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
   useEffect(() => {
-    getItem(id).then((itemData) => setItem(itemData));
+    getItem(id).then((data) => setItem(data));
   }, [id]);
 
-
   const submitReview = async () => {
-    if (!rating || !review.trim()) return alert("Enter rating + review text");
+    if (!rating || !review.trim()) {
+      alert("Enter rating + review text");
+      return;
+    }
 
     await addReview(id, {
-      username,
+      username: user,
       rating,
       review,
     });
 
     const updated = await getItem(id);
-    setItem(updated.data);
+    setItem(updated);
 
     setRating(0);
     setReview("");
@@ -108,4 +112,3 @@ export default function ItemDetails({ username }) {
     </div>
   );
 }
-

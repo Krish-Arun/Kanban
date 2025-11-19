@@ -1,35 +1,56 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import AuthProvider from "./context/AuthContext";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
 import NotFound from "./pages/NotFound";
-import EnterUsername from "./pages/EnterUsername";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
-  // Load username from localStorage at initialization (React-approved)
-  const [username, setUsername] = useState(() => {
-    return localStorage.getItem("username");
-  });
-
-  if (!username) {
-    return <EnterUsername setUsername={setUsername} />;
-  }
-
   return (
-    <Router>
-      <Navbar />
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <div className="p-4">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-      <div className="p-4">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/add" element={<AddItem />} />
-          <Route path="/item/:id" element={<ItemDetails username={username} />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </Router>
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/add"
+              element={
+                <PrivateRoute>
+                  <AddItem />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/item/:id"
+              element={
+                <PrivateRoute>
+                  <ItemDetails />
+                </PrivateRoute>
+              }
+            />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
