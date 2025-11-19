@@ -12,7 +12,7 @@ export default function App() {
       <Navbar />
       
       <div className="p-4 text-4xl text-blue-500 font-bold">
-        Tailwind Works!
+        imma kms
       </div>
           
       <div className="p-4">
