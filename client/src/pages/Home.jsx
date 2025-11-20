@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { getAllItems } from "../api/items";
 import { Link } from "react-router-dom";
 
+import { Input } from "@/components/ui/input";
+import TiltedItemCard from "@/components/TiltedItemCard";
+import Particles from "@/components/Particles";
+
 export default function Home() {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
@@ -34,73 +38,101 @@ export default function Home() {
   };
 
   return (
-    <div className="p-6 text-white max-w-4xl mx-auto">
+    <div className="text-white w-full max-h-full relative">
 
-      {/* Search section */}
-      <div className="flex gap-4 mb-8">
+      {/* GLOBAL PARTICLE BACKGROUND */}
+      <Particles
+        particleColors={["#ffffff"]}
+        particleCount={250}
+        particleSpread={10}
+        speed={0.12}
+        particleBaseSize={110}
+        moveParticlesOnHover={true}
+        alphaParticles={false}
+        disableRotation={false}
+        className="fixed inset-0 -z-10 pointer-events-none"
+      />
 
-        <input
-          type="text"
-          placeholder="Search items or reviews..."
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            runSearch(e.target.value, category);
-          }}
-          className="p-2 bg-gray-800 text-white rounded w-64"
-        />
+      {/* =========================== */}
+      {/* HERO SECTION (KEPT AS YOU LIKE IT) */}
+      {/* =========================== */}
 
-        <input
-          type="text"
-          placeholder="Filter by category..."
-          value={category}
-          onChange={(e) => {
-            setCategory(e.target.value);
-            runSearch(query, e.target.value);
-          }}
-          className="p-2 bg-gray-800 text-white rounded w-48"
-        />
+      <div className="w-full h-[600px] relative mb-16">
 
+        {/* HERO UI OVER PARTICLES */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 bg-black/30 p-4">
+          
+          <h1 className="text-5xl font-extrabold tracking-tight drop-shadow-xl">
+            Rate Everything ✨
+          </h1>
+
+          <p className="text-gray-300 text-lg max-w-xl drop-shadow-md">
+            Search, browse, and review anything.
+          </p>
+
+          {/* Main Search Bar */}
+          <Input
+            placeholder="Search items..."
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              runSearch(e.target.value, category);
+            }}
+            className="
+              text-white border-gray-700 
+              w-full max-w-2xl h-14 text-lg px-6
+              rounded-xl shadow-md
+            "
+          />
+
+          {/* Category Input */}
+          <Input
+            placeholder="Filter by category..."
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              runSearch(query, e.target.value);
+            }}
+            className="
+              bg-gray-900/80 text-white border-gray-700 
+              w-full max-w-md h-12 text-base px-5
+              rounded-xl shadow-md
+            "
+          />
+
+          {/* Add Item Button */}
+          <Link
+            to="/add"
+            className="
+              bg-blue-600 hover:bg-blue-700 
+              px-6 py-3 rounded-xl text-white 
+              font-medium transition shadow-lg
+            "
+          >
+            ➕ Add New Item
+          </Link>
+
+        </div>
       </div>
 
-      {/* Items list */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* ================== */}
+      {/* ITEMS GRID SECTION */}
+      {/* ================== */}
 
-        {filteredItems.length === 0 ? (
-          <p className="text-gray-400 text-lg">No items found.</p>
-        ) : (
-          
-          filteredItems.map((item) => (
-            <Link
-              to={`/item/${item._id}`}
-              key={item._id}
-              className="block bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition"
-            >
-              {/* Image */}
-              {item.imageUrl && (
-                <img
-                  src={item.imageUrl}
-                  alt="item"
-                  className="w-full h-48 object-cover rounded mb-3"
-                />
-              )}
-          
-              {/* Name */}
-              <h2 className="text-2xl font-semibold mb-2">{item.name}</h2>
-          
-              {/* Category */}
-              <p className="text-gray-400">{item.category}</p>
-          
-              {/* Rating */}
-              <p className="text-yellow-400 mt-2">
-                ⭐ {item.averageRating?.toFixed(1) || "No ratings yet"}
-              </p>
-            </Link>
-          ))
+      <div className="max-w-6xl mx-auto px-6 backdrop-blur-sm pb-20">
+        <h2 className="text-3xl font-semibold mb-8">Browse Items</h2>
 
-        )}
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {filteredItems.length === 0 ? (
+            <p className="text-gray-400 text-lg">No items found.</p>
+          ) : (
+            filteredItems.map((item) => (
+              <TiltedItemCard key={item._id} item={item} />
+            ))
+          )}
+        </div>
       </div>
+
     </div>
   );
 }
