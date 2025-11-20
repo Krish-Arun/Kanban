@@ -6,7 +6,7 @@ export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <nav className="bg-black text-white p-4 flex justify-between items-center">
+    <nav className="bg-black text-white px-4 py-4 m-0 flex justify-between items-center">
       <Link to="/" className="text-xl font-bold">
         RateEverything
       </Link>

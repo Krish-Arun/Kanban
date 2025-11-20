@@ -66,3 +66,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+#root {
+  margin: 0 !important;
+  padding: 0 !important;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getAllItems } from "../api/items";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,8 @@ export default function Home() {
 
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
+
+  const itemsRef = useRef(null);
 
   useEffect(() => {
     getAllItems().then((data) => {
@@ -70,21 +72,35 @@ export default function Home() {
             Search, browse, and review anything.
           </p>
 
-          {/* Main Search Bar */}
-          <Input
-            placeholder="Search items..."
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              runSearch(e.target.value, category);
-            }}
-            className="
-              text-white border-gray-700 
-              w-full max-w-2xl h-14 text-lg px-6
-              rounded-xl shadow-md
-            "
-          />
-
+          <div className="flex items-center gap-3 w-full max-w-2xl">
+            {/* Main Search Bar */}
+            <Input
+              placeholder="Search items..."
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                runSearch(e.target.value, category);
+              }}
+              className="
+                text-white border-gray-700 
+                w-full max-w-2xl h-14 text-lg px-6
+                rounded-xl shadow-md
+              "
+            />
+            
+            {/* Fake Search Button — Only scrolls */}
+              <button
+                onClick={() => itemsRef.current?.scrollIntoView({ behavior: "smooth" })}
+                className="
+                  h-14 px-6 rounded-xl
+                  bg-blue-600 hover:bg-blue-700
+                  text-white font-semibold
+                  transition shadow-md
+                "
+              >
+                Search
+              </button>
+            </div>
           {/* Category Input */}
           <Input
             placeholder="Filter by category..."
@@ -111,7 +127,6 @@ export default function Home() {
           >
             ➕ Add New Item
           </Link>
-
         </div>
       </div>
 
@@ -122,7 +137,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-6 backdrop-blur-sm pb-20">
         <h2 className="text-3xl font-semibold mb-8">Browse Items</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div ref={itemsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {filteredItems.length === 0 ? (
             <p className="text-gray-400 text-lg">No items found.</p>
           ) : (

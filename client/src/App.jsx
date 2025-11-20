@@ -15,7 +15,7 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Navbar />
-        <div className="p-4">
+        <div>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
